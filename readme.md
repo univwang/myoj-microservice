@@ -26,3 +26,14 @@
 - 使用 Knife4j Gateway 在网关层实现了对各服务 Swagger 接口文档的统一聚合，无需通过切换地址查看各服务的文档。
 - 为保护内部服务接口，给接口路径统一设置inner前缀，并通过在网关自定义 GlobalFilter（全局请求拦截器）实现对内部请求的检测和拦截，集中解决了权限校验问题。
 - 为防止判题操作执行时间较长，系统选用异步的方式，在题目服务中将用户提交id发送给 RabbitMQ 消息队列，并通过 Direct 交换机转发给判题队列，由判题服务进行消费，异步更新提交状态。相比于同步，响应时长由 xx 秒减少至 xx 秒，且系统 qps 提升了 xx%（需要自己使用 JMeter 等工具进行测试）。
+
+
+## docker 打包命令
+
+```shell
+scp ./myoj-backend-user-service/target/myoj-backend-user-service-0.0.1-SNAPSHOT.jar root@10.160.1.244:/root/project/myoj/myoj-backend-user-service
+scp ./myoj-backend-question-service/target/myoj-backend-question-service-0.0.1-SNAPSHOT.jar root@10.160.1.244:/root/project/myoj/myoj-backend-question-service
+scp ./myoj-backend-judge-service/target/myoj-backend-judge-service-0.0.1-SNAPSHOT.jar root@10.160.1.244:/root/project/myoj/myoj-backend-judge-service
+scp ./myoj-backend-gateway/target/myoj-backend-gateway-0.0.1-SNAPSHOT.jar root@10.160.1.244:/root/project/myoj/myoj-backend-gateway
+
+```
